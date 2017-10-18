@@ -43,32 +43,26 @@ module.exports = {
 			'foo' : function(e){console.log('foo !!!!');},
 			'bar' : function(e){
 
-				DIA.alert('Title alert 1','alert 1');
-				DIA.confirm('Title confirm 1','confirm 1',function(e){
-					e.preventDefault();
-					console.log('ok confirm 1');
-				});
-				DIA.alert('Title alert 2','alert 2');
-				DIA.confirm('Title confirm 2','confirm 2',function(e){
-					e.preventDefault();
-					console.log('ok confirm 2');
-				});
-// {
-// 	'title':'xxxxxxxxxxx',
-// 	'message':'fdsdfsdfsdf dsf <br/>fds fds fds fds'
-// }
-// 				console.log(x);
-				// console.log('bar !!!!');
-				// console.log(e);
-				// this.api('web','testRoute',{
-				// 	data : {txt:'xxxxxxxxx'},
-				// 	res : {
-				// 		http_200 : function(data){
-				// 			// data {key : 'xxxxx'}
-				// 			console.log('Server response:',data);
-				// 		}
-				// 	}
+				// DIA.alert('Title alert 1','alert 1');
+				// DIA.confirm('Title confirm 1','confirm 1',function(e){
+				// 	e.preventDefault();
+				// 	console.log('ok confirm 1');
 				// });
+				// DIA.alert('Title alert 2','alert 2');
+				// DIA.confirm('Title confirm 2','confirm 2',function(e){
+				// 	e.preventDefault();
+				// 	console.log('ok confirm 2');
+				// });
+
+				this.api('web','testRoute',{
+					data : {str:'xxxxxxxxx'},
+					res : {
+						http_200 : function(data){
+							// data {key : 'xxxxx'}
+							console.log('Server response:',data);
+						}
+					}
+				});
 			}
 		}
 	}

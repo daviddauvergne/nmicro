@@ -86,6 +86,7 @@ var _conf = {
 	sourcesThemes : path.join(dir,'sources','themes'),
 	sourcesPages : path.join(dir,'sources','pages'),
 	sourcesRest : path.join(dir,'sources','rest'),
+	sourcesSchemas : path.join(dir,'sources','schemas'),
 	dataFolder : path.join(__dirname,'data'),
 	setting : '',
 	dev : dev,

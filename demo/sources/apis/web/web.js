@@ -36,16 +36,10 @@ module.exports = {
 	// réponses par défault assignées à toutes les routes
 	res : {
 		http_error : function(code,data){
-			$dia('module-dialog').show({
-				'title':'ERROR '+code,
-				'message':code.message
-			});
+			DIA.alert('ERROR '+code,code.message);
 		},
 		http_400 : function(code,data){
-			$dia('module-dialog').show({
-				'title':'ERROR 400',
-				'message':LC.api.web.BadRequestError}
-			);
+			DIA.alert('ERROR 400',LC.api.web.BadRequestError);
 		}
 	}
 };

@@ -5,7 +5,7 @@ module.exports = {
 	"/test/route" : function(req, res, next, restify){
 
 		res.send({
-			"key" : req.params.txt
+			"key" : req.params.str
 		});
 
 		return next();

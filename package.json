@@ -1,40 +1,41 @@
 {
-	"name": "nmicro",
-	"version": "1.0.0",
-	"description": "## Install nmicro",
-	"main": "main.js",
-	"dependencies": {
-		"clean-css": "^3.4.23",
-		"commander": "^2.9.0",
-		"fs-extra": "^2.0.0",
-		"image-size": "^0.6.1",
-		"marked": "^0.3.6",
-		"md5-file": "^3.1.1",
-		"node-dir": "^0.1.16",
-		"node-expat": "^2.3.15",
-		"node-sass": "^4.3.0",
-		"require-reload": "^0.2.2",
-		"restify": "^4.3.0",
-		"shortid": "^2.2.8",
-		"socket.io": "^2.0.1",
-		"tosource": "^1.0.0",
-		"uglify-js": "^2.7.5",
-		"watchr": "^3.0.1",
-		"winston": "^2.3.1",
-		"yargs": "^7.1.0"
-	},
-	"devDependencies": {},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/daviddauvergne/nmicro.git"
-	},
-	"author": "David Dauvergne",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/daviddauvergne/nmicro/issues"
-	},
-	"homepage": "https://github.com/daviddauvergne/nmicro#readme"
+  "name": "nmicro",
+  "version": "1.0.0",
+  "description": "## Install nmicro",
+  "main": "main.js",
+  "dependencies": {
+    "ajv": "^5.2.3",
+    "clean-css": "^3.4.23",
+    "commander": "^2.9.0",
+    "fs-extra": "^2.0.0",
+    "image-size": "^0.6.1",
+    "marked": "^0.3.6",
+    "md5-file": "^3.1.1",
+    "node-dir": "^0.1.16",
+    "node-expat": "^2.3.15",
+    "node-sass": "^4.3.0",
+    "require-reload": "^0.2.2",
+    "restify": "^4.3.0",
+    "shortid": "^2.2.8",
+    "socket.io": "^2.0.1",
+    "tosource": "^1.0.0",
+    "uglify-js": "^2.7.5",
+    "watchr": "^3.0.1",
+    "winston": "^2.3.1",
+    "yargs": "^7.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daviddauvergne/nmicro.git"
+  },
+  "author": "David Dauvergne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/daviddauvergne/nmicro/issues"
+  },
+  "homepage": "https://github.com/daviddauvergne/nmicro#readme"
 }

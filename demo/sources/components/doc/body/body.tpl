@@ -2,7 +2,7 @@
 	id : nom du composant
 -->
 <template id="body" overlay="head" position="afterend">
-	<div>---------- <foo el="bar">Click</foo> ---- xcvxcv ----</div>
+	<div>---------- <foo el="bar">Click</foo> ---- xcv   xcv ----</div>
 </template>
 
 <template id="dialog_alert" overlay="body" position="afterend">
