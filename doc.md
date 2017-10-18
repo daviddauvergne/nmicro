@@ -3,7 +3,7 @@
 ## Principe
 
 1. nmicro ➔ packager/framwork HTML, CSS, JS + medias
-1. génération de plusieurs modèles (CSS [via SASS] + medias)
+1. génération de plusieurs thèmes (CSS [via SASS] + medias)
 1. multi-langues
 1. deux types de sortie (structure des dossiers):
 	1. app ➔ application mobile
@@ -11,8 +11,8 @@
 
 ## Fonctions
 
-1. server HTTP
-1. server REST pour des tests d'API
+1. serveur HTTP
+1. serveur REST pour des tests d'API
 1. builder
 1. auto-packing à l'enregistrement d'un fichier source
 	1. erreur de construction dans la console
@@ -26,8 +26,7 @@
 
 ![Schema NMICRO](demo/sources/themes/default/medias/nm-schema.svg)
 
-- **+ API**
-- **+ pages simples**
+**+ API**
 
 ### Structure du dossier **sources**
 
@@ -64,7 +63,7 @@
 
 ## lib
 
-- **lib** ➔ dossier pour les lib
+- **lib** ➔ dossier pour les lib supplémentaires
 	- **util.js** -> ressource JS (scop window)
 	- **timer.js** -> ressource JS (scop window)
 
