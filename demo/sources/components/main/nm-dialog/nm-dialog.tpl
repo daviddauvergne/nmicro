@@ -3,7 +3,7 @@
 -->
 <template id="nm-dialog">
 <div>
-	<div class="dialogModal" el="dialogModal"></div>
-	<div class="dialog" el="content"></div>
+	<div el="dialogModal"></div>
+	<div el="content"></div>
 </div>
 </template>

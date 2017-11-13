@@ -1,35 +1,84 @@
 <!--
-	Attribut du template :
-		id : nom du composant
+
+# Component template
+
+```xml
+<template id="component_name">
+	...
+</template>
+```
+
+## Template attribute
+
+ - id : component name
+
+### The locale is written with braces and the sign $:
+
+```xml
+<div>{$txt}</div>
+<div>{$foo.bar}</div>
+```
+
+### To display a property or attribute in an element
+
+```xml
+<span property="property_name"/>
+<span attribute="attribute_name"/>
+```
 -->
+
 <template id="xxx">
 	<div>{$clickme}</div>
 </template>
 
 <!--
-	Les fichiers .tpl peuvent contenir plusieurs templates.
-	Ces templates doivent avoir un identifiant différent du nom du composant.
-	Le rendu ne se fait pas automatiquement, il se déclenche avec  la fonction 'rend' :
+# Multi-templating
 
-		this.rend("identifiant_du_template");
+## Template attribute :
 
-	Attributs du template :
-		id : identifiant du template
-		overlay : élément de réference pour l'insertion
-			- soit le nom d'un élément dans le template du composant (*)
-			- soit un selecteur CSS
-		position : mode d'insertion dans le DOM
-			- 'beforebegin' -<p>- 'afterbegin' - 'beforeend' -</p>- 'afterend', et 'replace'
+- id: template name (different from the component name)
+- overlay: reference element for insertion
+	- the name of an element in the template component (ex: `<xx el="element_name">...</xx>`)
+	- CSS selector
+	- or `:scope` for component itself
+- position: insert mode in the DOM
+	- beforebegin `<p>` afterbegin - beforeend `</p>` afterend, and replace
 
-______
-	* Nom d'un élément
+```xml
+<template id="tpl_name" overlay="body" position="beforeend">
+	...
+</template>
+```
 
-	Pour nommer un élément d'un composant on utilise l'arribut "el"
+### The locale is written with braces and the sign $:
 
-			<xx el="element_name">...</xx>
+```xml
+<div>{$txt}</div>
+<div>{$foo.bar}</div>
+```
 
-	L'élément est accesible en JS via l'object "els" du composant
+### To display a property or attribute in an element
 
-			this.els.element_name <=> <xx el="element_name">...</xx>
+```xml
+<span property="property_name"/>
+<span attribute="attribute_name"/>
+```
 
+### The data is written with square brackets and the sign $:
+
+```xml
+<div on-click="[$event]" to-action="[$action]" title="[$attribute]">
+	[$content]
+</div>
+```
+- `[$event]    ` ➔ click event (is function)
+- `[$action]   ` ➔ action method (is function)
+- `[$attribute]` ➔ string attribute
+- `[$content]  ` ➔ string content (with or without valid XML elements)
+
+### Data render
+
+```javascript
+this.rend('template_name',data); // the data are optional
+```
 -->

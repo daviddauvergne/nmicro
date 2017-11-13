@@ -6,15 +6,17 @@ module.exports = {
 	// shéma des différentes routes
 	schema : {
 		// nom de route
-		testRoute : {
+		'/test/route' : {
 			// requête
 			req :{
 				// method get,post,put,del
 				method : 'post',
 				// content-type
 				// contentType : 'application/json',
-				// url de la route ex: /foo/bar
-				url : '/test/route',
+				// prepare URL (method GET)
+				// prepare : function(data){
+				// 	return '/url/xxx';
+				// },
 				// ajout automatique du JSON Web Token (header Authorization)
 				// setJWT : true
 				// Sauvegarde automatique du JWT envoyé, le nom de la clé retourné à la valeur de getJWT (ici : JWT)

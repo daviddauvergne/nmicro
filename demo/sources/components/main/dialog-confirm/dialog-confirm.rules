@@ -1,0 +1,15 @@
+dialog-confirm {}
+
+dialog-confirm > div {}
+
+dialog-confirm > div > div {}
+
+dialog-confirm > div > div > button[el="ok"] {}
+
+dialog-confirm > div > div > button[el="cancel"] {}
+
+dialog-confirm > div > br {}
+
+dialog-confirm > div > p {}
+
+dialog-confirm > div > h1 {}

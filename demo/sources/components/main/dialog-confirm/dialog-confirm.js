@@ -1,19 +1,18 @@
 module.exports = {
-	match : {
-		'dialog-confirm' : {
-			confirm:{el:'ok',event:'click'}
-		},
+	private : {
+		close : function(me,e){
+			e.stopPropagation();
+			me.dispatchParents('nmDialogClose');
+		}
 	},
 	// Events
 	events : {
 		click : {
 			ok : function(e){
-				e.preventDefault();
-				this.trigger('nm-dialog-close');
+				private.close(this,e);
 			},
 			cancel : function(e){
-				e.preventDefault();
-				this.trigger('nm-dialog-close');
+				private.close(this,e);
 			}
 		}
 	}

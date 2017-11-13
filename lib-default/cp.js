@@ -1,106 +1,335 @@
 
 window.$cp = (function(cpTmp) {
 
-	// match for assign data
-	var match = function(overlayEl,name,origin,data){
-		// assign data to element DOM
-		var _assignToDom = function(el,data,tpl){
-			if(el.els && el.els.content){
-				if(tpl.position){
-					if(typeof data[k] =='string')
-						el.els.content.insertAdjacentHTML(position,data);
-					else
-						el.els.content.insertAdjacentElement(position,data);
-				} else {
-					el.els.content.appendChild(data);
-				}
-				if(el.contentInsert)
-					el.contentInsert();
-			} else {
-				el.innerHTML = data;
-			}
-		};
+	var ALLCP = {};
+	var METHODS = {};
+	var PROPERTIES = {};
+	var ids = 0;
 
-		var toMatch = {};
-		// teamplate matching for this key
-		if(overlayEl.match && overlayEl.match[name]){
-			toMatch = overlayEl.match[name];
-		}
-
-		// data
-		for (var k in data) {
-			var el = null;
-			var all = false;
-			var matchKey = null;
-			var els;
-
-			if(toMatch[k])
-				matchKey = toMatch[k];
-
-			// data content for this key
-			var dataKey = data[k];
-
-			// search element to assign data
-			if(matchKey){
-				if(matchKey.selector){
-					if(matchKey.selector==':scope')
-						el = overlayEl;
-					else
-						el = overlayEl.querySelector(matchKey.selector);
-				} else if(matchKey.selectorAll){
-					el = overlayEl.querySelectorAll(matchKey.selector);
-					all = true;
-				} else if(matchKey.el && overlayEl.els && overlayEl.els[matchKey.el]) {
-					el = overlayEl.els[matchKey.el];
-				}
-			} else {
-				if(overlayEl.els && overlayEl.els[k]){
-					el = overlayEl.els[k];
-				}
-			}
-			// element exist
-			if(el){
-				if(matchKey && matchKey.replace)
-					dataKey = this.tpl(matchKey.replace,{value:dataKey});
-
-				if(all)
-					els = [].slice.call(el);
-				else
-					els = [el];
-
-				els.forEach(function(_el){
-					if(matchKey){
-						if(matchKey.propertie){
-							_el[matchKey.propertie] = dataKey;
-						} else if(matchKey.attribute){
-							_el.setAttribute(matchKey.attribute,dataKey);
-						} else if(matchKey.event){
-							_el.addEventListener(matchKey.event,dataKey);
-						} else if(matchKey.method){
-							_el.method(dataKey);
-						} else {
-							_assignToDom(_el,dataKey,matchKey);
-						}
-					} else {
-						_assignToDom(_el,dataKey,matchKey);
-					}
-				});
-
-			} else {
-				// element doest not exist
-				// search component
-				els = [].slice.call(overlayEl.querySelectorAll(k));
-				if(els.length>0){
-					// if element then rend data content for this key
-					els.forEach(function(el){
-						el.rend(dataKey);
-					});
-				} else {
-					logg.error(' Error [matching from '+origin+': '+name+'] no element found: '+k);
-				}
-			}
+	var removeProperties = function(props,elID){
+		if(props){
+			props.forEach(function(prop){
+				var index = PROPERTIES[prop].indexOf(elID);
+				if(index > -1)
+					PROPERTIES[prop].splice( index, 1 );
+			});
 		}
 	};
+
+	var removeMethods = function(methods,elID){
+		if(methods){
+			methods.forEach(function(method){
+				var index = METHODS[method].indexOf(elID);
+				if(index > -1)
+					METHODS[method].splice( index, 1 );
+			});
+		}
+	};
+
+	var getProperties = function(prop){
+		if(PROPERTIES[prop]){
+			return PROPERTIES[prop].map(function(id,i) {
+				if(ALLCP[id]){
+					return ALLCP[id][prop];
+				}
+			});
+		} else {
+			return [];
+		}
+	};
+
+	var dispathMethods = function(prop){
+		if(METHODS[prop]){
+			var values = getProperties(prop);
+			METHODS[prop].forEach(function(id,i){
+				if(ALLCP[id]){
+					ALLCP[id][prop](values);
+				}
+			});
+		}
+	};
+
+	var observer = new MutationObserver(function(mutations) {
+		mutations.forEach(function(mutation) {
+			if(mutation.removedNodes.length){
+				for (var i = 0; i < mutation.removedNodes.length; i++) {
+					var elr = mutation.removedNodes[i];
+					if(elr.nodeType === 1 && ALLCP[elr.__id]) {
+						delete ALLCP[elr.__id];
+						var id = elr.__id;
+						var properties = elr.__$properties;
+						removeProperties(properties,id);
+						removeMethods(elr.__$methods,id);
+						properties.forEach(function(prop){
+							dispathMethods(prop);
+						});
+					}
+				}
+			}
+
+			if(mutation.addedNodes.length){
+				for (var j = 0; j < mutation.addedNodes.length; j++) {
+					var ela = mutation.addedNodes[j];
+					if(ela.__id) {
+						ALLCP[ela.__id] = ela;
+						ela.__$properties.forEach(function(prop){
+							dispathMethods(prop);
+						});
+						ela.__$methods.forEach(function(method){
+							dispathMethods(method);
+						});
+					}
+				}
+			}
+		});
+	});
+	observer.observe(document.documentElement, {childList: true, subtree: true, characterData: false});
+
+/*
+# Component methods
+
+## api(name, route, data)
+
+| Param | Type     | Description | Required |
+|-------|----------|-------------| -------- |
+| name  | `string` | API name    | Yes      |
+| route | `string` | route name  | Yes      |
+| data  | `object` | sent data   | No       |
+
+```javascript
+if(this.els.form.checkValidity()){
+	var data = new FormData(this.els.form);
+	this.api('web','/test/route',{
+		data : data,
+		res : {
+			http_200 : function(data){
+				...
+			},
+			http_500 : function(data){
+				 ...
+			}
+		}
+	});
+}
+```
+*/
+	Element.prototype.api = function(name,route,data){
+		APIS[name][route](this,data);
+	};
+/*
+## dispatchChildrens(methodName, stopPropagation, data, max)
+
+| Param            | Type      | Description                                       | Required |
+|------------------|-----------|---------------------------------------------------| -------- |
+| methodName       | `string`  | method name                                       | Yes      |
+| stopPropagation  | `boolean` | stop propagation to the first method encountered  | Yes      |
+| data             | `object`  | sent data                                         | No       |
+| max              | `integer` | maximum level of depth                            | No       |
+
+*/
+	var dispatchChildrens = function(children, methodName, stopPropagation, data, level, max){
+		var childs = [];
+		for (var i = 0; i < children.length; i++) {
+			if(children[i][methodName]){
+				children[i][methodName](data);
+				if(stopPropagation)
+					return children[i];
+			}
+			childs = childs.concat([].slice.call(children[i].children));
+		}
+		level++;
+		if(level===max)
+			return null;
+		if(childs.length > 0)
+			return toDown(childs, methodName, stopPropagation, data, level, max);
+		return null;
+	};
+	Element.prototype.dispatchChildrens = function(methodName, stopPropagation, data, max){
+		dispatchChildrens([].slice.call(this.children), methodName, stopPropagation, data, 0, max);
+	};
+
+	Element.prototype.__assignProperties = function(prop,el){
+		if(this.__propertiesEls[prop]===undefined)
+			this.__propertiesEls[prop] = [];
+		this.__propertiesEls[prop].push(el);
+	};
+	Element.prototype.__dispatchProperties = function(prop,value){
+		if(this.__propertiesEls[prop])
+			this.__propertiesEls[prop].forEach(function(el){
+				el.innerHTML = value;
+			});
+	};
+
+/*
+## dispatchMethods(props)
+
+| Param  | Type                | Description           | Required |
+|--------|---------------------|-----------------------| -------- |
+| props  | `string` or `array` | properties to dispath | Yes      |
+
+*/
+	Element.prototype.dispatchMethods = function(props){
+		if(typeof props === 'string')
+			props = [props];
+		props.forEach(function(prop){
+			dispathMethods(prop);
+		});
+	};
+
+/*
+## dispatchParents(methodName, stopPropagation, data, max)
+
+| Param            | Type      | Description                                       | Required |
+|------------------|-----------|---------------------------------------------------| -------- |
+| methodName       | `string`  | method name                                       | Yes      |
+| stopPropagation  | `boolean` | stop propagation to the first method encountered  | Yes      |
+| data             | `object`  | sent data                                         | No       |
+| max              | `integer` | maximum level of depth                            | No       |
+
+*/
+	var dispatchParents = function(element, methodName, stopPropagation, data, level, max){
+		while (element.parentNode) {
+				element = element.parentNode;
+				if (element[methodName]){
+					element[methodName](data);
+					if(stopPropagation)
+						return element;
+				}
+				level++;
+				if(level===max)
+					return null;
+		}
+		return null;
+	};
+	Element.prototype.dispatchParents = function(methodName, stopPropagation, data, max){
+		dispatchParents(this,methodName,stopPropagation,data,0,max);
+	};
+
+/*
+## getProperties(props)
+
+| Param  | Type                | Description       | Required |
+|--------|---------------------|-------------------| -------- |
+| props  | `string` or `array` | properties to get | Yes      |
+
+*/
+	Element.prototype.getProperties = function(props){
+		var result = {};
+		if(typeof props === 'string')
+			props = [props];
+		props.forEach(function(prop){
+			var properties = getProperties(prop);
+			if(properties.length===1){
+				properties = properties[0];
+			} else if(properties.length===0){
+				properties = null;
+			}
+			result[prop] = properties;
+		});
+		return result;
+	};
+
+	var getOverlay = function(me,overlay){
+		if(overlay==':scope')
+			return me;
+		var overlayEl = me.els[overlay];
+		if(!overlayEl)
+			overlayEl = me.querySelector(overlay);
+		if(!overlayEl)
+			overlayEl = document.querySelector(overlay);
+		return overlayEl;
+	};
+
+	var createTpl = function(obj){
+		if(obj.template){
+			if(obj.overlay){
+				var tpl = {
+					content: obj.template,
+					overlay: obj.overlay
+				};
+				if(obj.position)
+					tpl.position = obj.position;
+				return tpl;
+			} else {
+				console.error('Error rending: overlay does not exist');
+			}
+		} else {
+			console.error('Error rending: template does not exist');
+		}
+		return null;
+	};
+/*
+## rend(tplName,data)
+
+| Param    | Type     | Description   | Required |
+|----------|----------|---------------| -------- |
+| tplName  | `string` | template name | Yes      |
+| data     | `object` | sent data     | No       |
+
+```javascript
+this.rend('tplName',{
+	key! 'value'
+});
+```
+*/
+	Element.prototype.rend = function(tplName,data){
+		var tpl;
+		if(typeof tplName=='string'){
+			if(_CP[this.nodeName].templates && _CP[this.nodeName].templates[tplName])
+				tpl = _CP[this.nodeName].templates[tplName];
+		} else if(typeof tplName=='object'){
+			tpl = createTpl(tplName);
+		}
+
+		if(tpl){
+			var overlayEl = getOverlay(this,tpl.overlay);
+			if(overlayEl){
+				if(this.locale)
+					tpl.content.locale = this.locale;
+				if(tpl.position)
+					tpl.content.position = tpl.position;
+				tpl.content.data = {};
+				if(data && Array.isArray(data)){
+					data.forEach(function(d){
+						if(data)
+							tpl.content.data = d;
+						tpl.content.toDomNodes(overlayEl);
+					});
+				} else {
+					if(data)
+						tpl.content.data = data;
+					return tpl.content.toDomNodes(overlayEl);
+				}
+			} else {
+				console.error('Error rending: element "'+tpl.overlay+'" does not exist');
+			}
+		} else {
+			console.error('Error rending: template "'+tplName+'" does not exist');
+		}
+	};
+
+/*
+## trigger(eventName, data)
+
+| Param      | Type     | Description   | Required |
+|------------|----------|---------------| -------- |
+| eventName  | `string` | event name    | Yes      |
+| data       | `mixed`  | sent data     | No       |
+
+```javascript
+this.trigger('eventName',12);
+```
+*/
+	Element.prototype.trigger = function(eventName, data){
+		var event = new CustomEvent(eventName,{
+				detail: data,
+				bubbles: true
+			}
+		);
+		this.dispatchEvent(event);
+	};
+
+
 //<DEV>
 	// scenarios middelware
 	var Scenarios = function(){};
@@ -126,26 +355,59 @@ window.$cp = (function(cpTmp) {
 		});
 	};
 
+	var setProperty = function(el, prop){
+		try{
+			Object.defineProperty(el, prop, {
+				set: function(val){
+					this['__'+prop] = val;
+					el.__dispatchProperties(prop,val);
+					el.dispatchMethods(prop);
+				},
+				get: function(){
+					return this['__'+prop];
+				}
+			});
+		} catch(e){}
+	};
+
+
+
 	var prepareElement = function(el,name,contentLoaded){
 		if (_CP[name]) {
 		var cpPromise = new Promise(function(resolve, reject) {
+
+			// content elements if contentLoaded
 			var contentLoadedNodes = null;
-			if(contentLoaded && el.innerHTML.trim()!=''){
+			if(contentLoaded && el.innerHTML.trim()!==''){
 				contentLoadedNodes = document.createElement('__');
 				while (el.childNodes.length > 0) {
 					contentLoadedNodes.appendChild(el.childNodes[0]);
 				}
 				el.innerHTML = '';
 			}
-			var nameLower = toCamelCase(name.toLowerCase());
-			el.cpname = name;
-			el.els = {};
-			el.attrs = [];
-			el.locale = {};
 
+			// vars
+			var nameLower = toCamelCase(name.toLowerCase());
+			ids++;
+			el.els = {};
+			el.__id = 'nm-'+ids;
+
+			// =======================================================
+			// attributes
+			var AttributesHandler = {
+				set: function(obj, prop, value) {
+					obj[prop] = value;
+					if(el.getAttribute(prop)!=value)
+						el.setAttribute(prop,value);
+				}
+			};
+
+			el.attrs = new Proxy({}, AttributesHandler);
+
+			// get attributes if contentLoaded
 			if(contentLoaded){
 				[].forEach.call(el.attributes, function(att) {
-					el.attrs.push(att.name);
+					el.attrs[att.name] = att.value;
 				});
 			}
 
@@ -158,7 +420,10 @@ window.$cp = (function(cpTmp) {
 					if (attr && attr.set)
 						attr.set.apply(this, [arguments[1]]);
 				}
+
 				elSetAttribute.apply(this, arguments);
+				if(!el.attrs[arguments[0]] || el.attrs[arguments[0]] != arguments[1])
+					el.attrs[arguments[0]] = arguments[1];
 			};
 
 			// getAttribute
@@ -173,39 +438,79 @@ window.$cp = (function(cpTmp) {
 				return elGetAttribute.apply(this, arguments);
 			};
 
+			// =======================================================
+			// locales
+			el.locale = {};
 			if(LC.cp[nameLower])
 				el.locale = LC.cp[nameLower];
 
-			// methods
-			for (var a in _methods)
-				el[a] = _methods[a];
-
-			for (a in _CP[name].methods)
-				el[a] = _CP[name].methods[a];
-
+			// =======================================================
 			// properties
-			for (a in _CP[name].properties)
-				Object.defineProperty(el, a, _CP[name].properties[a]);
+			el.__$properties = [];
+			el.__propertiesEls = {};
+			var propertiesAssign = [];
+			for (var prop in _CP[name].properties){
 
+				var value = _CP[name].properties[prop];
+				if(prop[0]=='$'){
+					prop = prop.substr(1);
+					el.__$properties.push(prop);
+					if(!PROPERTIES[prop]){
+						PROPERTIES[prop] = [];
+					}
+					PROPERTIES[prop].push(el.__id);
+				}
+
+				setProperty(el, prop);
+				var data = {
+					name:  prop,
+					value: value
+				};
+				if(el.data && el.data[prop])
+					data.value = el.data[prop];
+				propertiesAssign.push(data);
+			}
+
+			// =======================================================
+			// methods
+			el.__$methods = [];
+			for (var methodName in _CP[name].methods){
+				var method = _CP[name].methods[methodName];
+				if(methodName[0]=='$'){
+					methodName = methodName.substr(1);
+					el.__$methods.push(methodName);
+					if(!METHODS[methodName]){
+						METHODS[methodName] = [];
+					}
+					METHODS[methodName].push(el.__id);
+				}
+
+				el[methodName] = method;
+			}
+
+			// =======================================================
 			// events
-			for (a in _CP[name].events){
-
-				if(typeof _CP[name].events[a] === 'function'){
-					el.addEventListener(a, _CP[name].events[a], false);
+			for (var ev in _CP[name].events){
+				if(typeof _CP[name].events[ev] === 'function'){
+					el.addEventListener(ev, _CP[name].events[ev], false);
 				} else {
 					// delegation
-					el.addEventListener(a, function(e){
+					el.addEventListener(ev, function(e){
+
 						var elName = e.target.getAttribute('el');
 						var nodeName = e.target.nodeName.toLowerCase();
-						if(this.els[elName] && _CP[name].events[a][elName]){
-							_CP[name].events[a][elName].apply(this, [e]);
-						} else if(_CP[name].events[a][nodeName]){
-							_CP[name].events[a][nodeName].apply(this, [e]);
+						if(this.els[elName] && _CP[name].events[ev][elName]){
+							_CP[name].events[ev][elName].apply(this, [e]);
+						} else if(_CP[name].events[ev][nodeName]){
+							_CP[name].events[ev][nodeName].apply(this, [e]);
 						}
+
 					}, false);
 				}
 			}
 
+			// =======================================================
+			// DOM remove, contentInsert, create
 			if(_CP[name].dom ) {
 				if(_CP[name].dom.remove){
 					var elRemove = el.remove;
@@ -221,13 +526,12 @@ window.$cp = (function(cpTmp) {
 					_CP[name].dom.create.apply(el);
 			}
 
+			// =======================================================
+			// templating
 			if(_CP[name].template){
 				_CP[name].template.locale = el.locale;
+				_CP[name].template.data = el.data;
 				_CP[name].template.toDomNodes(el,el);
-			}
-
-			if(_CP[name].match){
-				el.match = _CP[name].match;
 			}
 
 			if(contentLoadedNodes){
@@ -244,10 +548,14 @@ window.$cp = (function(cpTmp) {
 				}
 			}
 
-			// 	Synchronisation attributs
+			// assign properties
+			propertiesAssign.forEach(function(props){
+				el[props.name] = props.value;
+			});
+			// Synchronisation attributs
 			if ( contentLoaded ) {
-				for (a in _CP[name].attributes) {
-					var attValue = elGetAttribute.apply(el, [a]);
+				for (var att in _CP[name].attributes) {
+					var attValue = elGetAttribute.apply(el, [att]);
 					if (attValue!==null)
 						el.setAttribute(a, attValue);
 				}
@@ -269,70 +577,28 @@ window.$cp = (function(cpTmp) {
 							el.scenarii.use(scenar,el);
 						});
 					}
-
 				});
 
 				if ( contentLoaded )
 					el.scenarii.go(function(){});
 			}
-			el.simulate = function(enventName,opts){
-				// https://github.com/Rich-Harris/simulant
-				simulant.fire( el, enventName, opts);
-			};
 //</DEV>
 			resolve();
 		});
 		cpPromise.catch(function(err) {
-			logg.error("Error prepare component: "+name+"!", err);
+			console.error("Error prepare component: "+name+"!", err);
 		});
 		}
 	};
 
 	var createElement = document.createElement;
-	document.createElement = function(tag) {
+	document.createElement = function(tag,data) {
 		var element = createElement.call(this, tag);
+		element.data = data;
 		prepareElement(element,element.nodeName,false);
 		return element;
 	};
 
-	var _methods = {
-		api: function(name,route,data){
-			APIS[name][route](this,data);
-		},
-		trigger: function(eventName, data){
-			var event = new CustomEvent(eventName,{
-					detail: data,
-					bubbles: true
-				}
-			);
-			this.dispatchEvent(event);
-		},
-		rend: function(tplNameOrData,data){
-			if(typeof tplNameOrData=='string'){
-				var tplName = tplNameOrData;
-				var tpl = _CP[this.cpname].templates[tplName];
-				if(tpl){
-					var overlayEl = this.els[tpl.overlay];
-					if(!overlayEl)
-						overlayEl = this.querySelector(tpl.overlay);
-					if(!overlayEl)
-						overlayEl = document.querySelector(tpl.overlay);
-					if(overlayEl){
-						tpl.content.toDomNodes(overlayEl);
-						if(data)
-							match(overlayEl,tplName,'template',data);
-					} else {
-						logg.error('Error rending: element "'+tpl.overlay+'" does not exist');
-					}
-				} else {
-					logg.error('Error rending: template "'+tplName+'" does not exist');
-				}
-			} else {
-				data = tplNameOrData;
-				match(this,this.cpname.toLowerCase(),'component',data);
-			}
-		}
-	};
 	window._CP = {};
 
 	var cp = {

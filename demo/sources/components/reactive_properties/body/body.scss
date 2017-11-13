@@ -1,0 +1,7 @@
+body {
+	display: block;
+}
+
+body > div[el="prod"] {
+	margin: 30px 70px;
+}

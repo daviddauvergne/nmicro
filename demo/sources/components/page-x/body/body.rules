@@ -1,0 +1,9 @@
+body {}
+
+body > nm-page-anim {}
+
+body > nm-page-anim > main {}
+
+body > nm-page-anim > main > p {}
+
+body > nm-page-anim > main > div[el="xx"] {}

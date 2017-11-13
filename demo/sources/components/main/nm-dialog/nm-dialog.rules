@@ -1,0 +1,7 @@
+nm-dialog {}
+
+nm-dialog > div {}
+
+nm-dialog > div > div[el="content"] {}
+
+nm-dialog > div > div[el="dialogModal"] {}

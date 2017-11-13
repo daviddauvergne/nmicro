@@ -1,0 +1,69 @@
+nm-page-anim {
+	display: block;
+	margin: 0;
+	padding: 0;
+	height:100%;
+	width:100%;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	width:100%;
+}
+
+body.animpage-fade-in {
+	animation: fadein;
+}
+
+body.animpage-fade-out {
+	animation: fadeout;
+	opacity: 0;
+}
+
+body.animpage-slideleft-in {
+	position: absolute;
+	transform: translateX(100%);
+	animation: slideleft-in;
+}
+
+body.animpage-slideright-in {
+	position: absolute;
+	transform: translateX(-110%);
+	animation: slideright-in;
+}
+
+body.animpage-slideleft-out {
+	position: absolute;
+	transform: translateX(0%);
+	animation: slideleft-out;
+}
+body.animpage-slideright-out {
+	position: absolute;
+	transform: translateX(0%);
+	animation: slideright-out;
+}
+
+@keyframes fadein {
+		from { opacity: 0; }
+		to   { opacity: 1; }
+}
+
+@keyframes fadeout {
+		from { opacity: 1; }
+		to   { opacity: 0; }
+}
+
+@keyframes slideleft-in {
+	100% { transform: translateX(0%); }
+}
+@keyframes slideright-in {
+	100% { transform: translateX(0%); }
+}
+
+@keyframes slideleft-out {
+	100% { transform: translateX(-110%); }
+}
+@keyframes slideright-out {
+	100% { transform: translateX(110%); }
+}

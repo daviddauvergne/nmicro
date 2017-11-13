@@ -1,0 +1,17 @@
+product {}
+
+product > div {}
+
+product > div > button[el="rm"] {}
+
+product > div > button[el="del"] {}
+
+product > div > button[el="add"] {}
+
+product > div > p {}
+
+product > div > p > span {}
+
+product > div > h2 {}
+
+product > div > h2 > span {}

@@ -1,96 +1,141 @@
 // xxx.js
+/*
+# Component Javascript
 
-// get external source
-// var x = global.getSource('/directory/file');// sources/directory/file.js
+## Folder structure
 
+Default structure
+```bash
+component_name
+|  └─ locale
+|      └─ en.json
+|      └─ fr.json
+|  └─ component_name.js
+|  └─ component_name.scss
+|  └─ component_name.tpl
+```
+
+You can change the structure, the files will be added automatically
+
+Example:
+```bash
+component_name
+|  └─ locale
+|      └─ en.json
+|      └─ fr.json
+|  └─ js
+|      └─ component_name.js
+|      └─ events.js
+|  └─ scss
+|      └─ component_name.scss
+|      └─ dialog_template.scss
+|  └─ tpl
+|      └─ component_name.tpl
+|      └─ dialog_template.tpl
+```
+
+## Get external source
+
+```javascript
+var inport = global.getSource('/directory/file');// sources/directory/file.js
+```
+*/
 module.exports = {
-	// private
-	private : {
-		test : function(){
-			console.log('private');
-		}
-	},
 
-	// DOM actions
-	dom : {
-		insert : function(){
-			console.log('DOM insert component xxx');
-			private.test();
-		},
-		create : function(){
-			console.log('DOM create component xxx');
-		},
-		remove : function(){
-			console.log('DOM before remove component xxx');
-		},
-		contentInsert : function(){
-			console.log("DOM contentInsert component xxx");
-		},
+/*
+## Private
+```javascript
+	private: {
+		foo: function(){},// access to the function ➔ private.foo()
+		bar: 0 // access to property ➔ private.bar
 	},
-	// methods
-	methods : {
-		foo : function(){
-			console.log('foo method xxx');
+```
+*/
+	private: {},
+/*
+## DOM actions
+```javascript
+	dom: {
+		// when the element is created
+		create: function(){},
+		// when the element is inserted
+		insert: function(){},
+		// when the element is deleted
+		remove: function(){},
+		// when content is inserted in the element
+		contentInsert: function(){},
+	},
+```
+*/
+	dom: {},
+/*
+## Methods
+```javascript
+	methods: {
+		foo: function(){},
+		// a global method start with the $ character
+		$bar: function(){}
+	},
+```
+*/
+	methods: {},
+/*
+## Events
+
+### Component event
+```javascript
+	events: {
+		click: function(e){}
+	},
+```
+### Component delegation event
+```javascript
+	events: {
+		click: {
+			// <xx el="foo">...</xx> in the component template
+			foo: function(e){}
 		}
 	},
-	// Events
-	events : {
-		click : function(e){
-			e.preventDefault();
-			console.log('Click xxx');
-		}
-	},
-	// attributes
-	attributes : {
-		value : {
-			set : function(val){
+```
+*/
+	events: {},
+/*
+## Attributes
+```javascript
+	attributes: {
+		value: {
+			set: function(val){
 				this._value = val;
-				console.log(val);
 			},
-			get :function(){
+			get: function(){
 				return this._value;
 			}
 		}
 	},
-	// properties
-	properties : {
-		y : {
-			set : function(val){
-				console.log(val);
-			},
-			get :function(){
-				return this.y;
-			}
-		}
-	},
-	// macth component rend
-	match : {
-			// template id
-			'xxx' : {
-				// match va permettre de mettre en relation des clés de données aux élements d'un template
-
-				// Pour q'une valeur soit attribué : à un attribut, une propriété, au contenu d'un élément ...
-
-				// par défaut :
-
-
-				// 1) recherche de l'élément
-				//  - selector : CSS selector depuis l'overlay or ':scope' for select overlay element
-				//  - selectorAll : CSS selector depuis l'overlay
-				//  - el : sélection de l'élément avec l'attribut el="..."
-				// 	- par default : si le template contient un élément avec el="key" (même clé que data)
-
-				// 2) partie de l'élément à assigner
-				// 	- attribute : nom de l'attribut (ex: name -> <x name="data[key]"></x>)
-				// 	- propertie : nom de propriété : (ex: name -> x.name = data[key] )
-				// 	- position : beforebegin -<p>- afterbegin - beforeend -</p>- afterend
-				// 	- par default : <x>data[key]</x>
-
-				// 3) remplacement
-				// templating pour remplacer la valeur dans un string 'xxx{{value}}yyyy'
-
-				// 4) function
-				// function:function(element,value){...}
-			}
-		}
+```
+*/
+/*
+## Initiation properties
+```javascript
+	properties: {
+		foo : 0,
+		// a global property start with the $ character
+		$bar : 0,
+	}
+```
+*/
+	properties: {}
 };
+
+/*
+# Component properties
+
+## this.els
+
+## this.locale
+
+## this.data
+
+## this.attrs
+
+*/

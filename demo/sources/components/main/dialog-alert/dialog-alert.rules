@@ -1,0 +1,11 @@
+dialog-alert {}
+
+dialog-alert > div {}
+
+dialog-alert > div > button {}
+
+dialog-alert > div > br {}
+
+dialog-alert > div > p {}
+
+dialog-alert > div > h1 {}

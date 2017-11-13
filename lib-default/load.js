@@ -1,12 +1,12 @@
 window.$load = (function() {
 
-	var queryString  = function ( method, data ) {
+	var queryString  = function ( data ) {
 		var result = [];
 		for (var key in data) {
 			result.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
 		}
 		var txt = result.join( "&" ).replace( /%20/g, "+" );
-		if(txt=='')
+		if(txt==='')
 			return null;
 		return '?' + txt;
 	};
@@ -41,11 +41,11 @@ window.$load = (function() {
 						} else {
 							fd.append(arrayKey, value);
 						}
-					})
+					});
 				} else {
 					fd.append(key, obj[prop]);
 				}
-			})
+			});
 
 			return fd;
 		};
@@ -86,7 +86,7 @@ window.$load = (function() {
 					} else if(properties.res.default['http_'+xhr.status]){
 						properties.res.default['http_'+xhr.status].apply(scope,[xhr.status,result]);
 					} else if (properties.res.http_error) {
-						properties.res.http_error.apply(scope,[xhr.status,result])
+						properties.res.http_error.apply(scope,[xhr.status,result]);
 					} else {
 						properties.res.default.http_error.apply(scope,[xhr.status,result]);
 					}
@@ -117,7 +117,13 @@ window.$load = (function() {
 		}
 
 		if(properties.req.method=='GET'){
-			xhr.open("GET",properties.req.url + queryString('GET',properties.data));
+			var url;
+			if(properties.prepare){
+				url = properties.prepare(properties.data);
+			} else {
+				url = properties.req.url + queryString(properties.data);
+			}
+			xhr.open("GET",url);
 			auth();
 			xhr.send();
 		} else {

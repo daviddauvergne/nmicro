@@ -1,0 +1,37 @@
+body {}
+
+body > div {}
+
+body > div > div {}
+
+body > div > div > nm-tabbox {}
+
+body > div > div > nm-tabbox > nm-tabpanels {}
+
+body > div > div > nm-tabbox > nm-tabpanels > nm-tabpanel[el="code"] {}
+
+body > div > div > nm-tabbox > nm-tabpanels > nm-tabpanel[el="result"] {}
+
+body > div > div > nm-tabbox > nm-tabs {}
+
+body > div > div > nm-tabbox > nm-tabs > nm-tab {}
+
+body > div > div[el="toolbar"] {}
+
+body > div > div[el="toolbar"] > button[el="api"] {}
+
+body > div > div[el="toolbar"] > button[el="dialogConfirm"] {}
+
+body > div > div[el="toolbar"] > button[el="dialogAlert"] {}
+
+body > div > div[el="toolbar"] > button[el="cpExData"] {}
+
+body > div > div[el="toolbar"] > button[el="cpExLocale"] {}
+
+body > div > div[el="toolbar"] > button[el="rendDataLoop"] {}
+
+body > div > div[el="toolbar"] > button[el="rendData"] {}
+
+body > div > h2 {}
+
+body > div > h1 {}

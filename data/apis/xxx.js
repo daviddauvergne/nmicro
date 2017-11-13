@@ -3,16 +3,18 @@ module.exports = {
 	// url pour window.NMICRO_WEB_SERVER_URL = 'http://...'; défini dans setting.js
 	url : 'NMICRO_WEB_SERVER_URL',
 
-	// shéma des différentes routes
+	// schema route
 	schema : {
-		// nom de route
+		// route name
 		testRoute : {
-			// requête
+			// requeste
 			req :{
 				// method get,post,put,del
 				method : 'post',
-				// url de la route ex: /foo/bar
-				url : '/foo/bar',
+				// prepare URL (method GET)
+				// prepare : function(data){
+				// 	return '/url/xxx';
+				// },
 
 				// responseType
 				// responseType : 'blob',
@@ -27,7 +29,7 @@ module.exports = {
 				// getJWT : 'JWT'
 
 			},
-			// traitement des réponses pour cette route
+			// Responses
 			// res : {
 			// 	http_200 : function(data){
 			// 		console.log(data);
@@ -39,7 +41,7 @@ module.exports = {
 		}
 	},
 
-	// réponses par défault assignées à toutes les routes
+	// default responses
 	res : {
 		http_error : function(code,data){
 			console.log(code,data);

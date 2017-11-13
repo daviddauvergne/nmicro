@@ -2,19 +2,14 @@ nm-dialog {
 	display: block;
 }
 
-nm-dialog > div > .dialog {
+nm-dialog > div > div[el="content"] {
 	visibility:hidden;
 	display:block;
 	position: fixed;
 	overflow-x: hidden;
 	overflow-y: auto;
 	min-width: 140px;
-}
-
-// all modes
-nm-dialog > div > .dialog {
 	font-size: 15px;
-	min-width: 140px;
 	padding: 10px 10px 20px 10px;
 	text-align: center;
 	background: #FFF;
@@ -27,21 +22,17 @@ nm-dialog > div > .dialog {
 	border-radius: 5px;
 }
 
-nm-dialog[mode="wait"] > div > .dialog {
+nm-dialog[mode="wait"] > div > div[el="content"] {
 	overflow-x: hidden;
 	overflow-y: hidden;
 }
 
-nm-dialog > div > .dialogModal {
+nm-dialog > div > div[el="dialogModal"] {
 	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100%;
 	height: 100%;
-}
-
-// all modes
-nm-dialog > div > .dialogModal {
 	background:
 	radial-gradient(black 15%, transparent 16%) 0 0,
 	radial-gradient(black 15%, transparent 16%) 8px 8px,
@@ -52,6 +43,6 @@ nm-dialog > div > .dialogModal {
 	opacity: 0.3;
 }
 
-nm-dialog[mode="alert"] > div > .dialog {
+nm-dialog[mode="alert"] > div > div[el="content"] {
 	color:red;
 }

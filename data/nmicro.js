@@ -1,4 +1,4 @@
-// configuration NMICRO
+// NMICRO configuration
 module.exports = {
 	// // Log folder mode "test" default: ./log
 	// logFolder: '/path/to/log',

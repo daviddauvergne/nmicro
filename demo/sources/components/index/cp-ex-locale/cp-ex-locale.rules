@@ -1,0 +1,11 @@
+cp-ex-locale {}
+
+cp-ex-locale > div {}
+
+cp-ex-locale > div > div > span[el="content"] {}
+
+cp-ex-locale > div > br {}
+
+cp-ex-locale > div > div {}
+
+cp-ex-locale > div > div > hr {}

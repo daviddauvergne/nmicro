@@ -1,0 +1,43 @@
+body {
+	display: block;
+}
+
+h1, h2 {
+	text-align: $h1-2-align;
+}
+
+h3 {
+	margin: 20px auto 0px auto;
+}
+
+body > div > div[el="toolbar"]{
+	border-top:    $toolbar-border;
+	border-bottom: $toolbar-border;
+	margin-top:    $toolbar-margin;
+	padding:       $toolbar-padding;
+	text-align:    center;
+}
+
+body > div > div[el="toolbar"] button {
+	display:       inline-block;
+	border:        $button-border;
+	border-radius: $button-border-radius;
+	height:        $button-height;
+	line-height:   25px;
+	padding:       0 10px;
+	margin:        0 5px;
+	cursor:        pointer;
+	color: gray;
+}
+
+body > div > div[el="toolbar"] button[selected] {
+	color: black;
+}
+
+body > div > div.tabbox {
+	display:      block;
+	width:        550px;
+	margin:       auto;
+}
+
+// @import 'directory/file'; // sources/directory/file.scss

@@ -1,17 +1,17 @@
-// script de requête basé sur le package restify <http://restify.com/>
-// pour créer simplement des réponses serveurs
+
+// package restify <http://restify.com/>
 module.exports = {
-	"/test-route" : function(req, res, next, restify){
+	"/test/route" : function(req, res, next, restify, faker){
 
-		var params = req.params;
+		var data = faker("test/response");
 
-		res.send({
-			"the_response" : 42
-		});
+		data.str = req.params.str;
+
+		res.send(data);
 
 		return next();
 		// Erreurs <http://restify.com/#error-handling>
-		// tester une erreur 400
+		// Ex: error 400
 		// return next(new restify.BadRequestError('Bad Request'));
 	}
 };

@@ -1,0 +1,29 @@
+{
+	"description":"Test response",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description":"User ID",
+			"type": "integer",
+			"minimum": 0
+		},
+		"email": {
+			"description":"User email",
+			"format": "email",
+			"type": "string",
+			"faker": "internet.email"
+		},
+		"firstname": {
+			"description":"User first name",
+			"type": "string",
+			"faker": "name.firstName"
+		},
+		"lastname": {
+			"description":"User last name",
+			"type": "string",
+			"faker": "name.lastName"
+		}
+	},
+
+ "required": ["id","email","firstname","lastname"]
+}

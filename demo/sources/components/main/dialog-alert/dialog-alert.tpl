@@ -1,7 +1,7 @@
 
 <template id="dialog-alert">
-	<h1 el="title"></h1>
-	<p el="message"></p>
+	<h1>[$title]</h1>
+	<p>[$message]</p>
 	<br/><br/>
-	<button el="close">{$ok}</button>
+	<button on-click="[$close]">{$ok}</button>
 </template>

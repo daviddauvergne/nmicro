@@ -1,0 +1,13 @@
+cp-ex-form {}
+
+cp-ex-form > form[el="form"] {}
+
+cp-ex-form > form[el="form"] > div {}
+
+cp-ex-form > form[el="form"] > div > button {}
+
+cp-ex-form > form[el="form"] > p {}
+
+cp-ex-form > form[el="form"] > p > input {}
+
+cp-ex-form > form[el="form"] > p > label {}

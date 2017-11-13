@@ -27,9 +27,8 @@ module.exports = {
 		}
 	},
 	// Évènements
-	events : {
-		'nm-dialog-close' : function(e){
-			e.preventDefault();
+	methods : {
+		'nmDialogClose' : function(){
 			this.remove();
 		}
 	}

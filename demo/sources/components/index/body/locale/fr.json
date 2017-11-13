@@ -1,0 +1,20 @@
+{
+	"title":       "NMICRO - démonstration",
+	"openconsole": "Ouvrez la console !!",
+	"button":      {
+		"rendData":       "Template avec données",
+		"rendDataLoop":   "Template boucle",
+		"dialogAlert":    "Dialogue alerte",
+		"dialogConfirm":  "Dialogue confirmation",
+		"cpexlocale":     "Composant avec langues",
+		"cpexdata":       "Composant JsonMl",
+		"api":            "API"
+	},
+	"dmessage": "Un message",
+	"dtitle":   "Un titre",
+	"clickme":  "Cliquez moi",
+	"tab" : {
+		"result": "Résultat",
+		"code":   "Code"
+	}
+}
