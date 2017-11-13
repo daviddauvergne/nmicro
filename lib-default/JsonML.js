@@ -138,10 +138,15 @@
 					if(element.contentInsert)
 						element.contentInsert();
 				} else {
-					if(_CP[element.nodeName] && refel instanceof HTMLElement===false && element.els.content){
-						element.els.content.appendChild(el);
-						if(element.contentInsert)
-							element.contentInsert();
+					if(element.els && element.els.content){
+						try {
+							element.els.content.appendChild(el);
+							if(element.contentInsert)
+								element.contentInsert();
+						} catch (e) {
+							console.error('el="content" can not be the root element of the template');
+						}
+
 					} else {
 						element.appendChild(el);
 						if(element.contentInsert)

@@ -3,6 +3,7 @@
 		id : component name
 -->
 <template id="body">
+<div>
 	<h1>{$title}</h1>
 	<h2>{$openconsole}</h2>
 	<div el="toolbar">
@@ -33,6 +34,7 @@
 			</nm-tabpanels>
 		</nm-tabbox>
 	</div>
+</div>
 </template>
 
 <!--

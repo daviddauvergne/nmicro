@@ -1,4 +1,5 @@
 <template id="cp-ex-locale">
+<div>
 	<div>
 		{$txt}
 	<hr/>
@@ -6,6 +7,7 @@
 	</div>
 	<br/>
 	<div>{$assignContent} <span el="content"></span></div>
+</div>
 </template>
 
 <!--

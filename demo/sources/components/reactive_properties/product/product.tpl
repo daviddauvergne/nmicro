@@ -25,11 +25,13 @@
 -->
 
 <template id="product">
-	<h2><span attribute="name"/></h2>
-	<p>{$quantity} <span property="quantity"/></p>
-	<button el="add">➕</button>
-	<button el="del">➖</button>
-	<button el="rm">✖</button>
+	<div>
+		<h2><span attribute="name"/></h2>
+		<p>{$quantity} <span property="quantity"/></p>
+		<button el="add">➕</button>
+		<button el="del">➖</button>
+		<button el="rm">✖</button>
+	</div>
 </template>
 
 <!--

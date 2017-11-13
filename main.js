@@ -244,7 +244,7 @@ setTimeout(function () {
 						var filesRelative = files.map(function(file){
 							hashFiles += md5File.sync(file);
 							return file.substring(pathWML.length+1);
-						})
+						});
 						var filesSting = filesRelative.join("\n");
 						var hash = crypto.createHash('md5').update(hashFiles).digest('hex');
 						var date = new Date().toUTCString();
@@ -290,8 +290,9 @@ NETWORK:
 			final();
 		});
 		var socket = null;
-		toWatch(_conf,modeDefault,logger,server,emitMessage);
-
+		var watcher = toWatch(_conf,modeDefault,logger,server,emitMessage);
+		watcher.start();
+		webConfig.pushStalker(watcher);
 		io.sockets.on('connection', function (__socket) {
 			socket = __socket;
 			socket.on('console', function (data) {
