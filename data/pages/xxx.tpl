@@ -1,8 +1,8 @@
 <!--
 	Template attribute :
-		id : header (content "header" element)
+		id : head (content "head" element)
 -->
-<template id="header">
+<template id="head">
 <title>{$title}</title>
 <link rel="icon" type="image/png" href="medias/favicon.png"/>
 <link rel="shortcut icon" type="image/x-icon" href="medias/favicon.ico"/>
@@ -12,7 +12,7 @@
 	Element body for search engine indexation ex:
 
 	Template attribute :
-		id : body (content "header" element)
+		id : body (content "body" element)
 <template id="body">
  ...
 </template>
