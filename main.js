@@ -302,7 +302,11 @@ NETWORK:
 					var content = fs.readFileSync(jsFile,'utf8');
 					content = content.split('\n');
 					var line = (data.arguments[2]*1)-1;
-					var tab = content[line].match(/\[(\d+)\|(.*)\.js\]/);
+					var tab;
+					try {
+						tab = content[line].match(/\[(\d+)\|(.*)\.js\]/);
+					} catch (e) {}
+
 					if(tab){
 						logger.onerror(data.arguments[0],tab[2]+'.js',tab[1]);
 					} else {

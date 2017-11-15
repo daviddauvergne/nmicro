@@ -4,6 +4,4 @@ body > div[el="prod"] {}
 
 body > div[el="prod"] > product {}
 
-body > div[el="prod"] > span {}
-
 body > div[el="prod"] > header {}
