@@ -18,7 +18,6 @@
 		<button el="dialogConfirm">{$button.dialogConfirm}</button>
 
 		<button el="api">{$button.api}</button>
-
 	</div>
 
 	<div class="tabbox">
