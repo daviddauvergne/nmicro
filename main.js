@@ -97,12 +97,14 @@ var _conf = {
 	indexFileHTML : 'index.html',
 	mainFileJS : 'main.js',
 	mainFileCSS : 'main.css',
-	varsSCSS : 'vars.scss'
+	varsSCSS : 'vars'
 };
 
 global.LC = {
 	cpmain: {}
 };
+
+global.varsSCSS = {};
 
 var nmicroClientFile = path.join(dir,'nmicro.js');
 if(fs.existsSync(nmicroClientFile)){
