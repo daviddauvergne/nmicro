@@ -1,12 +1,13 @@
-const docGenerator = require('./lib/docGenerator');
-const pjson = require('./package.json');
+// doc with docGenerator
 const path = require('path');
-
-var files = [
-	path.join(__dirname,'README.md'),
-	path.join(__dirname,'data/components/xxx.js'),
-	path.join(__dirname,'lib-default/cp.js'),
-	path.join(__dirname,'data/components/xxx.tpl')
-];
-
-docGenerator(path.join(__dirname,'doc.md'),files,pjson.version);
+const pjson = require('./package.json');
+module.exports = {
+	version: pjson.version,
+	files: [
+		path.join(__dirname,'README.md'),
+		path.join(__dirname,'data/components/xxx.js'),
+		path.join(__dirname,'lib-default/cp.js'),
+		path.join(__dirname,'data/components/xxx.tpl')
+	],
+	save:path.join(__dirname,'doc.md')
+};

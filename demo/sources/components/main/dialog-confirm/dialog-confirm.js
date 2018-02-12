@@ -1,17 +1,17 @@
 module.exports = {
-	private : {
-		close : function(me,e){
+	private: {
+		close: function (me, e) {
 			e.stopPropagation();
 			me.dispatchParents('nmDialogClose');
 		}
 	},
 	// Events
-	events : {
-		click : {
-			ok : function(e){
+	events: {
+		click: {
+			ok: function (e) {
 				private.close(this,e);
 			},
-			cancel : function(e){
+			cancel: function (e) {
 				private.close(this,e);
 			}
 		}

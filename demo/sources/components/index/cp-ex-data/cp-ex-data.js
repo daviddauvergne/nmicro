@@ -4,12 +4,12 @@ module.exports = {
 	// attributes
 	attributes: {
 		color: {
-			set: function(val){
+			set: function (val) {
 				this.style.color = val;
 			}
 		}
 	},
 	properties: {
-		colorName : null
+		colorName: null
 	}
 };
