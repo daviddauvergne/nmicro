@@ -1,5 +1,11 @@
 // NMICRO configuration
 module.exports = {
+	// version
+	version: '1.0',
+
+	// description
+	description: 'Appli description',
+
 	// // Log folder mode "test" default: ./log
 	// logFolder: '/path/to/log',
 

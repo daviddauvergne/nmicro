@@ -3,16 +3,17 @@ module.exports = {
 	// Events
 	events: {
 		click: {
-			add : function(e){
+			add: function (e) {
 				e.stopPropagation();
 				this.quantity++;
 			},
-			del : function(e){
+			del: function (e) {
 				e.stopPropagation();
-				if(this.quantity > 0)
+				if (this.quantity > 0) {
 					this.quantity--;
+				}
 			},
-			rm : function(e){
+			rm: function (e) {
 				e.stopPropagation();
 				this.remove();
 			}
@@ -22,6 +23,6 @@ module.exports = {
 	// definition of properties
 	properties: {
 		// a global property starts with the $ character
-		$quantity : 0
+		$quantity: 0
 	}
 };

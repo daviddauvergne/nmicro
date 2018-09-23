@@ -1,16 +1,16 @@
 module.exports = {
 
 	// url pour window.NMICRO_WEB_SERVER_URL = 'http://xxxxx'; défini dans setting.js
-	url : 'NMICRO_WEB_SERVER_URL',
+	url: 'NMICRO_WEB_SERVER_URL',
 
 	// shéma des différentes routes
-	schema : {
+	schema: {
 		// nom de route
-		'/test/route' : {
+		'/test/route': {
 			// requête
-			req :{
+			req: {
 				// method get,post,put,del
-				method : 'post',
+				method: 'post'
 				// content-type
 				// contentType : 'application/json',
 				// prepare URL (method GET)
@@ -21,7 +21,6 @@ module.exports = {
 				// setJWT : true
 				// Sauvegarde automatique du JWT envoyé, le nom de la clé retourné à la valeur de getJWT (ici : JWT)
 				// getJWT : 'JWT'
-
 			},
 			// traitement des réponses pour cette route
 			// res : {
@@ -36,12 +35,12 @@ module.exports = {
 	},
 
 	// réponses par défault assignées à toutes les routes
-	res : {
-		http_error : function(code,data){
-			DIA.alert('ERROR '+code,code.message);
+	res: {
+		http_error: function (code, data) {
+			DIA.alert('ERROR ' + code, code.message);
 		},
-		http_400 : function(code,data){
-			DIA.alert('ERROR 400',LC.api.web.BadRequestError);
+		http_400: function (code, data) {
+			DIA.alert('ERROR 400', LC.api.web.BadRequestError);
 		}
 	}
 };

@@ -14,10 +14,10 @@ module.exports = {
 	// restriction : 'web',
 
 	// liste des APIs dont dépend la page
-	apis : [],
+	apis: [],
 
 	// "scenarios" est un tableau de noms de scenarios pour le développement et les tests
 	// Seul les scenarios de cette liste seront lancés par les composants
 	// Les scenarios sont présents uniquement en dévelloppement, ils sont retirés en production
-	scenarios : []
+	scenarios: []
 };

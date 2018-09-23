@@ -1,9 +1,7 @@
-
 // package restify <http://restify.com/>
 module.exports = {
-	"/test/route" : function(req, res, next, restify, faker){
-
-		var data = faker("test/response");
+	'/test/route': function (req, res, next, restify, faker) {
+		var data = faker('test/response');
 
 		data.str = req.params.str;
 
